@@ -12,8 +12,8 @@
     here are the top three players<br/>
     {% if top_players %}
       <ul>
-        {% for player_name, win_rate in top_players %}
-        <li>{{ player_name }} -- {{ win_rate }}%</li>
+        {% for player_name, race, win_rate in top_players %}
+        <li>{{ player_name }} ({{ race }}) -- {{ win_rate }}%</li>
         {% endfor %}
       </ul>
     {% endif %}
@@ -21,8 +21,8 @@
     here's the data for all players<br/>
     {% if all_players %}
       <ul>
-        {% for player_name, win_rate in all_players %}
-        <li>{{ player_name }} -- {{ win_rate }}%</li>
+        {% for player_name, race, win_rate in all_players %}
+        <li>{{ player_name }} ({{ race }}) -- {{ win_rate }}%</li>
         {% endfor %}
       </ul>
     {% endif %}

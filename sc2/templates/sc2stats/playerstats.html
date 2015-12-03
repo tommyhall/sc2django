@@ -1,0 +1,23 @@
+{% extends 'sc2stats/base.html' %}
+
+{% block content %}
+<h1>Player Statistics</h1>
+<h3>top performers</h3><br/>
+here are the top three players<br/>
+{% if top_players %}
+  <ul>
+    {% for player_name, race, win_rate in top_players %}
+    <li>{{ player_name }} ({{ race }}) -- {{ win_rate }}%</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+<h3>all data</h3><br/>
+here's the data for all players<br/>
+{% if all_players %}
+  <ul>
+    {% for player_name, race, win_rate in all_players %}
+    <li>{{ player_name }} ({{ race }}) -- {{ win_rate }}%</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+{% endblock %}

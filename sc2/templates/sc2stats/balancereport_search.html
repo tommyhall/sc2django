@@ -1,0 +1,12 @@
+
+{% block search_input %}
+<form method="POST">
+  {% csrf_token %}
+  {{ form }}
+  <input type="submit" value="Submit" />
+</form><br/><br/>
+
+{% if message %}
+<p>{{ message }}</p>
+{% endif %}
+{% endblock %}

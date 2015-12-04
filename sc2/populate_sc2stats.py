@@ -39,7 +39,7 @@ def populate():
     leagues = ['GSL', 'SSL']
 
     # create some matches
-    i = 0
+    key_id = 0
     for season in seasons:
         for league in leagues:
             for i in xrange(40):
@@ -50,7 +50,7 @@ def populate():
                 player_2 = player_ids[1].player_id
                 winner = random.choice(player_ids).player_id
                 # gogo
-                add_match(id=i,
+                add_match(id=key_id,
                     map_id=map_id,
                     player_1=player_1,
                     player_2=player_2,
@@ -59,7 +59,7 @@ def populate():
                     league=league,
                     exp='HotS'
                 )
-                i += 1
+                key_id += 1
 
     print "done"
 

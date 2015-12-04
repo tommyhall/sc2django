@@ -1,23 +1,31 @@
 {% extends 'sc2stats/base.html' %}
 
 {% block content %}
-<h1>Player Statistics</h1>
-<h3>top performers</h3><br/>
-here are the top three players<br/>
+<div class='col-sm-12'>
+  <h1>Player Statistics</h1>
+  <h3>top performers</h3><br/>
 {% if top_players %}
+  <p>here are the top three players:</p>
   <ul>
     {% for player_name, race, win_rate in top_players %}
     <li>{{ player_name }} ({{ race }}) -- {{ win_rate }}%</li>
     {% endfor %}
   </ul>
+{% else %}
+  <p>whoops, couldn't find the top player data</p>
 {% endif %}
+</div>
+<div class='col-sm-12'>
 <h3>all data</h3><br/>
-here's the data for all players<br/>
 {% if all_players %}
+  <p>here's the data for all players:</p>
   <ul>
     {% for player_name, race, win_rate in all_players %}
     <li>{{ player_name }} ({{ race }}) -- {{ win_rate }}%</li>
     {% endfor %}
   </ul>
+{% else %}
+  <p>whoops, couldn't find the player data</p>
 {% endif %}
+</div>
 {% endblock %}

@@ -5,5 +5,5 @@ urlpatterns = patterns('',
     url(r'^$', views.index, name='index'),
     url(r'^/about/$', views.about, name='about'),
     url(r'^/playerstats/$', views.playerstats, name='playerstats'),
-    # url(r'^/win_rate_report/$', views.win_rate_report, name='win_rate_report')
+    url(r'^/balancereport/$', views.balancereport, name='balancereport')
 )

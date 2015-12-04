@@ -1,8 +1,19 @@
 
 .jumbotron {
-  background-color: #0fd0fd;
+  background-color: #00b5ba;
 }
-
 .jumbotron h1 {
   color: #fff;
+}
+
+.jumbotron p {
+  color: #fff;
+}
+
+.navbar {
+  background-color: #000;
+}
+
+.btn-primary {
+  background-color: #00b5ba;
 }

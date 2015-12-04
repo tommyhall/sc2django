@@ -52,7 +52,7 @@ def balancereport(request):
     """ The page for generating balance reports """
 
     form = BalanceReportSearchForm()
-    response_data = []
+    response_data = {}
     js_data = None
 
     if request.method == 'POST':
@@ -79,8 +79,15 @@ def balancereport(request):
 
             # make some dummy data
             import random
-            for i in xrange(10):
-                response_data.append({'x':i, 'y':random.randint(0,100)})
+            for matchup in ['ZvP', 'ZvT', 'PvT']:
+                data_series = []
+                for i in xrange(24):
+                    data_series.append({'x':i, 'y':random.randint(20,80)})
+                response_data[matchup] = data_series
+
+            # import random
+            # for i in xrange(10):
+            #     response_data.append({'x':i, 'y':random.randint(0,100)})
 
             # TODO: return a JSON is probably the best way to do this crap
             js_data = json.dumps(response_data)

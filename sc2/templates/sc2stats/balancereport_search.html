@@ -6,7 +6,79 @@
   <input type="submit" value="Submit" />
 </form><br/><br/>
 
-{% if message %}
-<p>{{ message }}</p>
+{% if response_data %}
+<!-- Load d3 (TODO: might be best not to do this here?) -->
+<p> about to try a script thing </p>
+<svg id="chart" width="720" height="360"></svg>
+<script src="/static/js/d3/d3.js" charset="utf-8"></script>
+<script>
+
+  // TODO: need something to happen on mouseover (show data point)
+  // TODO: try and make the chart at least somewhat responsive? or smaller?
+  // aligulac is responsive (they're using high charts)
+  // TODO: this whole script should almost definitely be in a completely diff file
+
+  // we grab the JSON from django, unpack it and throw it into the ol data array
+  // the JSON is a list of dicts in the form {'x': i, 'y': j}
+  data_from_django = {{ response_data|safe }};
+  var data = [];
+  for (var i =0; i < data_from_django.length; i++) {
+    data.push({x: data_from_django[i]['x'], y: data_from_django[i]['y']});
+  }
+
+  var chart = d3.select('#chart'),
+    WIDTH = 720,
+    HEIGHT = 360,
+    MARGINS = {top:20, right:20, bottom:20, left:50},
+    xRange = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([d3.min(data, function(d) {
+      return d.x;
+    }), d3.max(data, function(d) {
+      return d.x;
+    })]),
+    yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([d3.min(data, function(d) {
+      return d.y;
+    }), d3.max(data, function(d) {
+      return d.y;
+    })]),
+    xAxis = d3.svg.axis()
+      .scale(xRange)
+      .tickSize(5)
+      .tickSubdivide(true),
+    yAxis = d3.svg.axis()
+      .scale(yRange)
+      .tickSize(5)
+      .orient('left')
+      .tickSubdivide(true);
+
+    chart.append('svg:g')
+      .attr('class', 'x axis')
+      .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
+      .call(xAxis);
+
+    chart.append('svg:g')
+      .attr('class', 'y axis')
+      .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
+      .call(yAxis);
+
+    // line generator function which returns x and y coordinates
+    var lineFunc = d3.svg.line()
+      .x(function(d) {
+        return xRange(d.x)
+      })
+      .y(function(d) {
+        return yRange(d.y)
+      })
+      //.interpolate('linear') // tells d3 to draw straight lines
+
+    // set the d attribute of the SVG path to the coordinates returned from line function
+    chart.append('svg:path')
+      .attr('d', lineFunc(data))
+      .attr('stroke', 'blue') // line color
+      .attr('stroke-width', 2)
+      .attr('fill', 'none');
+
+</script>
+{% else %}
+<p> nope </p>
 {% endif %}
 {% endblock %}

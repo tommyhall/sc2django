@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.db.models import Q
+import json
 
 from sc2.forms import BalanceReportSearchForm
 from sc2stats.models import Player, Map, Match
@@ -51,31 +52,38 @@ def balancereport(request):
     """ The page for generating balance reports """
 
     form = BalanceReportSearchForm()
-    message = "no no"
+    response_data = []
+    js_data = None
 
     if request.method == 'POST':
         # create a form instance and populate it with data from the request
         form = BalanceReportSearchForm(request.POST)
         if form.is_valid():
-            # process the data in form.cleaned_data as required
-
+            # now we've got data in form.cleaned_data, process as desired
             map_id = form.cleaned_data.get('map_name')
             if map_id:
                 matches = Match.objects.filter(Q(map_id=map_id))
-
+            else:
+                matches = Match.objects.all()
             season = form.cleaned_data.get('season')
             if season:
                 matches = matches.filter(Q(season=season))
-
             league = form.cleaned_data.get('league')
             if league:
                 matches = matches.filter(Q(league=league))
 
-            if len(matches) > 0:
-                message = "ya hi got something! {0} matches out of {1}".format(len(matches), len(Match.objects.all()))
-            else:
-                message = "i hear what you're saying but nothing there, def a better way to say this"
+            # TODO: should do some actual calculations here instead of dummy data
+            # what i want to send out here are THREE data series
+            # --> PvZ, ZvT, PvT
+            # the number is the win rate for the FIRST letter in that matchup
 
-    context_dict = {'form': form, 'message': message}
+            # make some dummy data
+            import random
+            for i in xrange(10):
+                response_data.append({'x':i, 'y':random.randint(0,100)})
 
+            # TODO: return a JSON is probably the best way to do this crap
+            js_data = json.dumps(response_data)
+
+    context_dict = {'form': form, 'response_data': js_data}
     return render(request, 'sc2stats/balancereport.html', context_dict)

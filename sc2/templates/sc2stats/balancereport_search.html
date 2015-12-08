@@ -1,16 +1,4 @@
 
 {% block search_input %}
-<form method="POST">
-  {% csrf_token %}
-  <p>
-    {{ form.map_name.label }}: {{ form.map_name }}&nbsp;
-    {{ form.season.label }}: {{ form.season }}&nbsp;
-    {{ form.league.label}}: {{ form.league }}&nbsp;
-    <input type="submit" class="btn btn-primary btn-lg" value="Submit" />
-  </p>
-</form><br/><br/>
 
-{% if response_data %}
-{% include 'sc2stats/balancereport_chart.html' %}
-{% endif %}
 {% endblock %}

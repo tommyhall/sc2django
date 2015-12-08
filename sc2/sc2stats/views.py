@@ -85,11 +85,6 @@ def balancereport(request):
                     data_series.append({'x':i, 'y':random.randint(20,80)})
                 response_data[matchup] = data_series
 
-            # import random
-            # for i in xrange(10):
-            #     response_data.append({'x':i, 'y':random.randint(0,100)})
-
-            # TODO: return a JSON is probably the best way to do this crap
             js_data = json.dumps(response_data)
 
     context_dict = {'form': form, 'response_data': js_data}

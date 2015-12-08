@@ -1,8 +1,50 @@
 {% extends 'sc2stats/base.html' %}
 
 {% block content %}
-<div class='col-sm-12'>
+<div class="col-md-8">
+  <br/>
   <h1>Balance report</h1>
-{% include 'sc2stats/balancereport_search.html' %}
+  <form method="POST">
+    {% csrf_token %}
+    <p>
+      {{ form.map_name.label }}: {{ form.map_name }}&nbsp;
+      {{ form.season.label }}: {{ form.season }}&nbsp;
+      {{ form.league.label}}: {{ form.league }}&nbsp;&nbsp;&nbsp;
+      <input type="submit" class="btn btn-primary btn-md" value="Submit" />
+    </p>
+  </form><hr/><br/><br/>
 </div>
+
+  {% if response_data %}
+  <div class="col-md-8">
+    {% include 'sc2stats/balancereport_chart.html' %}
+    <p class="attribution">
+      Source: made it up
+    </p>
+  </div>
+  <div class="col-md-8">
+    <p><strong>The above chart was built with d3.js.</strong> Duo ei audire virtute quaeque, te nam discere assentior efficiantur. Nam invidunt repudiandae concludaturque ut, nec ea unum accusata, vivendum liberavisse mea eu. In hinc putent intellegat ius, te vis nihil nusquam interpretaris. No virtute convenire sed, facilisi principes pertinacia no vel, ut mutat patrioque rationibus eos.
+    </p>
+  </div>
+  <div class="col-md-8">
+    <h3>Interactive pie chart</h3>
+    <p>This chart is just a complete nonsense pie chart, but it's interactive, and again was built with <strong>d3.js</strong></p>
+    {% include 'sc2stats/dummypiechart.html' %}
+    <p class="attribution">
+      Source: total nonsense
+    </p>
+    <p>
+      As you can see, the above is a pie/donut chart which has functional tooltips. It was also built with d3.js
+    </p>
+    <p>
+      Congue vulputate has eu. Usu no docendi menandri. No has habemus menandri, ut probo vitae latine per. Eu mei mucius voluptatibus, has ut ubique meliore tractatos, enim minim et pri. Ne sea nihil causae, ne pro nominati intellegebat, qui legere nostrud an. Eos ei brute sanctus facilisis, vel scripserit complectitur ex, modo bonorum ne sea. Veri graece voluptatum ne pro, justo labitur copiosae ex est.
+    </p>
+  </div>
+  <div class="col-md-8">
+    <h3>High Charts example</h3>
+    <p>Meanwhile, this chart was built with High Charts. High Charts is a great, non-free javascript charting library.</p>
+    {% include 'sc2stats/highchart_example.html' %}
+  </div>
+  {% endif %}
+
 {% endblock %}
